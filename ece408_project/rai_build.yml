@@ -1,0 +1,34 @@
+rai:
+  version: 0.2
+  image: illinoisimpact/ece408_mxnet_docker:amd64-gpu-latest-fa19
+resources:
+  cpu:
+    architecture: amd64
+  gpu:
+    architecture: volta
+    count: 1
+  network: false
+commands:
+  build:
+    - /bin/bash -c "cp -rv /ece408_src/* /mxnet/src/operator/custom" # copy golden files to mxnet source tree
+    - /bin/bash -c "cp -rv /src/* /build" # copy the project folder to /build so everything appears in the upload
+    - /bin/bash -c "for src in ece408_src/*; do cp -v $src /mxnet/src/operator/custom/.; done" # copy source files to mxnet tree
+    - nice -n20 make -C /mxnet # build mxnet
+    - pip2 install --user -e /mxnet/python   # install python bindings
+    #- /usr/bin/time python m1.1.py # execute code
+    #- /usr/bin/time python m1.2.py # execute code
+    #- /usr/bin/time python m2.1.py  # execute code
+    #- /usr/bin/time python m3.1.py # execute code
+    #- /usr/bin/time python m4.1.py # execute code
+    #- /usr/bin/time python final.py # execute code
+    #- nvprof python m1.2.py
+    #- python m3.1.py
+    #- python m3.1.py 100
+    #- nvprof -o timeline.nvprof python m3.1.py
+    #- nvprof --kernels "::forward:1" --analysis-metrics -o forward1_analysis.nvprof python m3.1.py
+    #- nvprof --kernels "::forward:2" --analysis-metrics -o forward2_analysis.nvprof python m3.1.py
+    - python m4.1.py 10000
+    #- nvprof python m4.1.py 10000
+    #- nvprof -o timeline.nvprof python m4.1.py 10000
+    #- nvprof --kernels "::unrolltoshare1:1" --analysis-metrics -o unrolltoshare1.nvprof python m4.1.py 10000
+    #- nvprof --kernels "::unrolltoshare2:1" --analysis-metrics -o unrolltoshare2.nvprof python m4.1.py 10000
