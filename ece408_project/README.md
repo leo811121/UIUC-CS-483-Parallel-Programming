@@ -657,3 +657,6 @@ NCSA/UIUC © 2018 [Carl Pearson](https://cwpearson.github.io)
 Modified in fall 2018 [Vikram](https://github.com/msharmavikram/)
 
 Last modified by Rui Lan and Zhichun Wan
+
+## Final Report
+- [Final Report](https://github.com/leo811121/UIUC-CS-483-Parallel-Programming/blob/master/ece408_project/report.pdf)
